@@ -1,30 +1,23 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-
 import 'package:student_grades_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Student grades application test', (tester) async {
+    await tester.pumpWidget(const GradesApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Check the initial average and student grade.
+    expect(find.text('ממוצע: 66.3'), findsOneWidget);
+    expect(find.text('נויה'), findsOneWidget);
+    expect(find.text('ציון: 92'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Increase the first student's grade.
+    await tester.tap(find.byIcon(Icons.add).first);
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the grade and average changed.
+    expect(find.text('ציון: 93'), findsOneWidget);
+    expect(find.text('ממוצע: 66.5'), findsOneWidget);
   });
 }
